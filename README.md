@@ -1,7 +1,15 @@
 # CONSCRIPT Auto Splitter
 
-Currently only supports auto start after game intro.
+A very simple [LiveSplit](https://livesplit.org/) Auto Splitter for [CONSCRIPT](https://www.conscriptgame.com/).
 
-TODO 
- - In Game Timer
- - Auto Split on chapters
+### Features
+ - Auto starts once player has control.
+ - Auto splits at the end of each chapter.
+ - Auto splits at game end.
+
+### Supported
+ - [Steam](https://store.steampowered.com/app/1286990/CONSCRIPT/)
+ - [GOG](https://www.gog.com/en/game/conscript)
+
+### TODO 
+ - Read In Game Timer
