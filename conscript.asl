@@ -13,12 +13,12 @@
 
 // Steam v1.0.0.2
 state("CONSCRIPT") {
-	int RoomId : "CONSCRIPT.exe", 0x1F6D590;
+    int RoomId : "CONSCRIPT.exe", 0x1F6D590;
 }
 
 // GOG v1.0.0.0
 state("CONSCRIPT", "v1.0.0.0 (G)") {
-	int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
+    int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
 }
 
 init
@@ -37,11 +37,11 @@ init
 
     var arr = game.ReadPointer(onFound(scn.Scan(roomArrayTrg)));
     var len = game.ReadValue<int>(onFound(scn.Scan(roomArrLenTrg)));
-    
+
     vars.RoomNames = new string[len];
 
     if (len == 0)
-        throw new InvalidOperationException(); 
+        throw new InvalidOperationException();
 
     for (int i = 0; i < len; i++)
     {
@@ -54,6 +54,19 @@ start
 {
     return vars.RoomNames[old.RoomId] == "rm_loading_assets" &&
            vars.RoomNames[current.RoomId] == "rm_tr_spawn";
+}
+
+split
+{
+    // Splits after going to bed at the end of the flashbacks
+    if (vars.RoomNames[old.RoomId] == "rm_cs_bedroom" &&
+        vars.RoomNames[current.RoomId] == "rm_chapter_end")
+        return true;
+ 
+    // End game split
+    if (vars.RoomNames[old.RoomId] == "rm_text" &&
+        vars.RoomNames[current.RoomId] == "rm_ending_text")
+        return true;
 }
 
 update
