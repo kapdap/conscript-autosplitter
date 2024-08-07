@@ -11,17 +11,23 @@
  *  https://opensource.org/licenses/MIT.
  */
 
-// Steam v1.0.0.2
-state("CONSCRIPT") {
-    int RoomId : "CONSCRIPT.exe", 0x1F6D590;
-    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x217FF70, 0xD0, 0x320;
+// Steam v1.0.1.0
+state("CONSCRIPT", "v1.0.1.0 (Steam)") {
+    int RoomId : "CONSCRIPT.exe", 0x1FB16E0;
+    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C40C0, 0xB0, 0x320;
 }
 
 // GOG v1.0.0.0
-state("CONSCRIPT", "v1.0.0.0 (G)") {
+state("CONSCRIPT", "v1.0.0.0 (GOG)") {
     int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x940, 0x40;
 }
+
+// TODO: Epic Games release
+/*state("CONSCRIPT", "v1.0.0.0 (Epic)") {
+    int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
+    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x940, 0x40;
+}*/
 
 init
 {
@@ -31,8 +37,10 @@ init
     var exe = modules.First();
     var scn = new SignatureScanner(game, exe.BaseAddress, exe.ModuleMemorySize);
 
-    if (exe.ModuleMemorySize == 0xE85000)
-        version = "v1.0.0.0 (G)";
+    if (exe.ModuleMemorySize == 0x23780003)
+        version = "v1.0.1.0 (Steam)";
+    else if (exe.ModuleMemorySize == 0xE85000)
+        version = "v1.0.0.0 (GOG)";
 
     var roomArrayTrg = new SigScanTarget(5, "74 0C 48 8B 05 ???????? 48 8B 04 D0");
     var roomArrLenTrg = new SigScanTarget(3, "48 3B 15 ???????? 73 ?? 48 8B 0D");
@@ -41,7 +49,7 @@ init
     var len = game.ReadValue<int>(onFound(scn.Scan(roomArrLenTrg)));
 
     if (len == 0)
-        throw new InvalidOperationException();
+        throw new InvalidOperationException("Unable to read room array length.");
 
     vars.RoomNames = new string[len];
 
