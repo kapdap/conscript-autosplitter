@@ -11,10 +11,10 @@
  *  https://opensource.org/licenses/MIT.
  */
 
-// Steam v1.0.1.0
-state("CONSCRIPT", "v1.0.1.0 (Steam)") {
-    int RoomId : "CONSCRIPT.exe", 0x1FB16E0;
-    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C40C0, 0xB0, 0x320;
+// Steam v1.0.1.1
+state("CONSCRIPT", "v1.0.1.1 (Steam)") {
+    int RoomId : "CONSCRIPT.exe", 0x1FB2790;
+    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C5170, 0xB0, 0x320;
 }
 
 // GOG v1.0.0.0
@@ -37,8 +37,8 @@ init
     var exe = modules.First();
     var scn = new SignatureScanner(game, exe.BaseAddress, exe.ModuleMemorySize);
 
-    if (exe.ModuleMemorySize == 0x23780003)
-        version = "v1.0.1.0 (Steam)";
+    if (exe.ModuleMemorySize == 0x237A000)
+        version = "v1.0.1.1 (Steam)";
     else if (exe.ModuleMemorySize == 0xE85000)
         version = "v1.0.0.0 (GOG)";
 
