@@ -17,10 +17,10 @@ state("CONSCRIPT", "v1.0.1.1 (Steam)") {
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C5170, 0xB0, 0x320;
 }
 
-// GOG v1.0.0.0
-state("CONSCRIPT", "v1.0.0.0 (GOG)") {
+// GOG v1.0.0.2
+state("CONSCRIPT", "v1.0.0.2 (GOG)") {
     int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
-    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x940, 0x40;
+    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x970, 0x40;
 }
 
 // TODO: Epic Games release
@@ -40,7 +40,7 @@ init
     if (exe.ModuleMemorySize == 0x237A000)
         version = "v1.0.1.1 (Steam)";
     else if (exe.ModuleMemorySize == 0xE85000)
-        version = "v1.0.0.0 (GOG)";
+        version = "v1.0.0.2 (GOG)";
 
     var roomArrayTrg = new SigScanTarget(5, "74 0C 48 8B 05 ???????? 48 8B 04 D0");
     var roomArrLenTrg = new SigScanTarget(3, "48 3B 15 ???????? 73 ?? 48 8B 0D");
