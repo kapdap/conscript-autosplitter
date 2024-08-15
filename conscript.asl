@@ -15,12 +15,14 @@
 state("CONSCRIPT", "v1.0.1.2 (Steam)") {
     int RoomId : "CONSCRIPT.exe", 0x1FB2750;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x320;
+    long currentEnding : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x260;
 }
 
 // GOG v1.0.0.2
 state("CONSCRIPT", "v1.0.0.2 (GOG)") {
     int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x970, 0x40;
+    long currentEnding : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x3B0, 0x80;
 }
 
 // TODO: Epic Games release
@@ -73,9 +75,15 @@ split
         vars.RoomNames[current.RoomId] == "rm_chapter_end")
         return true;
  
+    // Splits after leaving in the truck at the end of chapter 5 flashback
+    if (vars.RoomNames[old.RoomId] == "rm_cs_passage" &&
+        vars.RoomNames[current.RoomId] == "rm_text" &&
+        current.currentEnding != 6) // Don't split at the end of the secret ending
+        return true;
+ 
     // End game split
-    if (vars.RoomNames[old.RoomId] == "rm_text" &&
-        vars.RoomNames[current.RoomId] == "rm_ending_text")
+    if (vars.RoomNames[old.RoomId] == "rm_ending_title" &&
+        vars.RoomNames[current.RoomId] == "rm_credits")
         return true;
 }
 
