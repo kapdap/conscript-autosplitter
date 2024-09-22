@@ -12,17 +12,17 @@
  */
 
 // Steam v1.0.1.2
-state("CONSCRIPT", "v1.0.1.2 (Steam)") {
+state("CONSCRIPT", "v1.0.1.2 (S)") {
     int RoomId : "CONSCRIPT.exe", 0x1FB2750;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x320;
     long currentEnding : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x260;
 }
 
-// GOG v1.0.0.2
-state("CONSCRIPT", "v1.0.0.2 (GOG)") {
-    int RoomId : "CONSCRIPT.exe", 0xDBD0B8;
-    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x970, 0x40;
-    long currentEnding : "CONSCRIPT.exe", 0xBAD3F0, 0x30, 0x3B0, 0x80;
+// GOG v1.0.1.2
+state("CONSCRIPT", "v1.0.1.2 (G)") {
+    int RoomId : "CONSCRIPT.exe", 0x1B69538, 0x0, 0x18, 0x110;
+    double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x1B5A1C8, 0x30, 0x900, 0x50;
+    long currentEnding : "CONSCRIPT.exe", 0x1B5A1C8, 0x30, 0x540, 0x40;
 }
 
 // TODO: Epic Games release
@@ -40,9 +40,9 @@ init
     var scn = new SignatureScanner(game, exe.BaseAddress, exe.ModuleMemorySize);
 
     if (exe.ModuleMemorySize == 0x2379000)
-        version = "v1.0.1.2 (Steam)";
-    else if (exe.ModuleMemorySize == 0xE85000)
-        version = "v1.0.0.2 (GOG)";
+        version = "v1.0.1.2 (S)";
+    else if (exe.ModuleMemorySize == 0x1CCD000)
+        version = "v1.0.1.2 (G)";
 
     var roomArrayTrg = new SigScanTarget(5, "74 0C 48 8B 05 ???????? 48 8B 04 D0");
     var roomArrLenTrg = new SigScanTarget(3, "48 3B 15 ???????? 73 ?? 48 8B 0D");
