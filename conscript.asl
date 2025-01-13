@@ -15,6 +15,7 @@
 state("CONSCRIPT", "v1.0.1.2 (S)") {
     int RoomId : "CONSCRIPT.exe", 0x1FB2750;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x320;
+    double putteeSpeedModifier : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x1C0;
     long currentEnding : "CONSCRIPT.exe", 0x21C5130, 0xB0, 0x260;
 }
 
@@ -22,6 +23,7 @@ state("CONSCRIPT", "v1.0.1.2 (S)") {
 state("CONSCRIPT", "v1.0.1.2 (G)") {
     int RoomId : "CONSCRIPT.exe", 0x1B69538, 0x0, 0x18, 0x110;
     double RESULTS_ACTIVE : "CONSCRIPT.exe", 0x1B5A1C8, 0x30, 0x900, 0x50;
+    double putteeSpeedModifier : "CONSCRIPT.exe", 0x1B5A1C8, 0x30, 0x5B0, 0x70;
     long currentEnding : "CONSCRIPT.exe", 0x1B5A1C8, 0x30, 0x540, 0x40;
 }
 
@@ -89,6 +91,7 @@ split
 
 update
 {
+    current.Puttees = current.putteeSpeedModifier > 1 ? "Equipped" : "Unequipped";
     current.RoomName = vars.RoomNames[current.RoomId];
 }
 
